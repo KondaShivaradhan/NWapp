@@ -3,82 +3,61 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Image, Switch } from 'react-native';
 import axios from "axios";
 import config from '../../config.json'
-import { Icon, Button } from '@rneui/themed';
+import { Button, Icon } from '@rneui/themed';
+
 import { Text } from '@rneui/themed';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 
 const CustomeDrawer = (props) => {
+    const Ud = props.Udetails
+    const Rdata = props.rewData
+    const type = props.type
     const [isDarkMode, setIsDarkMode] = useState(false);
-
     const handleToggleSwitch = () => {
         setIsDarkMode(!isDarkMode);
     };
-    const [Udetails, setUdetails] = useState([]);
-    const get = async () => {
-        const requestBody = {
-            email: props.cage,
-        };
-        await axios.post(`https://${config.RenderIP}/api/getDetails`, requestBody)
-            .then(response => {
-                // Handle the response data
-                console.log(response.data);
-                setUdetails(JSON.stringify(response.data))
-
-            })
-            .catch(error => {
-                // Handle the error
-                console.error(error);
-            });
-        // const response = await fetch(`https://${config.RenderIP}/api/getDetails`, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify(requestBody),
-        // });
-
-        // const json = await response.json();
-    }
-    try {
-        get()
-    }
-    catch (e) {
-
+    const items = [['Home', 'home', `${(type=='rew')?'RewMainScreen':'MainScreen'}`], [`${(type=='rew')?'My Assigned papers':'My Submissions'}`, 'article', 'Profile'], ['Profile', 'person', 'Profile'], ['Settings', 'settings', 'Profile'], ['About', 'info', 'Profile']]
+    const [Udetails, setUdetails] = useState(JSON.stringify(Ud));
+    function Captilizer(str) {
+       return str.charAt(0).toUpperCase() + str.slice(1)
     }
     function Parser(field) {
-        console.log(JSON.parse(Udetails)[field]);
-        return `${JSON.parse(Udetails)[field]}`
+        // console.log(JSON.parse(Ud)[field]);
+        // (type=='rew')?Rdata:Ud
+        if (type == 'rew') {
+            return `${(Rdata)[field]}`
+
+        }
+        else {
+            return `${JSON.parse(Ud)[field]}`
+
+        }
     }
     return (
         <DrawerContentScrollView style={styles.container} {...props}>
-            <View style={{ display: 'flex', justifyContent: 'center', alignSelf: 'center' }}>
-                <Image source={{ uri: "https://cdn4.iconfinder.com/data/icons/green-shopper/1068/user.png" }} style={{ width: 70, height: 70 }} ></Image>
-                {Udetails.length > 0 && <>
-                    <Text style={{ textAlign: 'center' }}>{Parser('lastName')} </Text>
-                    <Text>{Parser('firstName')}</Text>
-
-                </>
-                }
+            <View style={{ gap: 10, justifyContent: 'center', flexDirection: 'row', marginTop: 10, marginBottom: 20, alignSelf: 'center' }}>
+                <View>
+                    <Image source={{ uri: "https://cdn4.iconfinder.com/data/icons/green-shopper/1068/user.png" }} style={{ width: 70, height: 70 }} ></Image>
+                </View>
+                <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
+                    <Text style={{ fontWeight: 'bold' }}>{Captilizer(Parser('lastName'))} {Captilizer(Parser('firstName'))}</Text>
+                    <Text>{Parser('email')}</Text>
+                </View>
             </View>
+            {items.map((i, index) => (
+                <DrawerItem key={index} style={styles.drawerItem}
+                    label={() => (
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Icon name={i[1]} size={25} color="#089b2d" />
 
-            <DrawerItem style={styles.drawerItem}
-                label="Home"
+                            <Text style={{ marginLeft: 10, fontSize: 15, fontWeight: 'bold' }}>{i[0]}</Text>
+                        </View>
+                    )}
 
-                onPress={() => props.navigation.navigate('MainScreen')}
-            />
-            <DrawerItem style={styles.drawerItem}
-                label="My Submissions"
-
-                onPress={() => props.navigation.navigate('MainScreen')}
-            />
-            <DrawerItem style={styles.drawerItem}
-                label="Settings"
-
-                onPress={() => props.navigation.navigate('Profile')}
-            /><DrawerItem style={styles.drawerItem}
-                label="About"
-
-                onPress={() => props.navigation.navigate('Profile')}
-            />
+                    onPress={() => props.navigation.navigate(i[2])}
+                />
+            ))}
+           
             <View style={styles.switchContainer}>
                 <Text style={styles.switchText}>Dark Mode</Text>
                 <Switch
@@ -89,10 +68,7 @@ const CustomeDrawer = (props) => {
                 />
             </View>
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                {/* <Button radius={'lg'} type="solid" color="green" >
-                    About 
-                    <Icon style={{marginLeft:5}} name="car" color="white" />
-                </Button> */}
+
                 <Button radius={'lg'} type="solid" onPress={() => { props.navigation.navigate('Login') }} color="error" >
                     Logout
                     <Icon style={{ marginLeft: 5 }} name="logout" color="white" />
@@ -108,10 +84,10 @@ const CustomeDrawer = (props) => {
 
 const styles = StyleSheet.create({
     container: {
-        flexGrow: 1,
+        // flexGrow: 1,
         backgroundColor: '#FFFFFF',
-        paddingVertical: 20,
-        paddingHorizontal: 10,
+        paddingVertical: 10
+        // paddingHorizontal: 10,
     },
     darkContainer: {
         backgroundColor: '#000000',
@@ -131,7 +107,7 @@ const styles = StyleSheet.create({
     drawerItem: {
         fontSize: 16,
         fontWeight: 'bold',
-        marginBottom: 10,
+        // marginBottom: 10,
         color: '#000000',
     },
     drawerItemL: {

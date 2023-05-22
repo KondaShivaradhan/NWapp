@@ -3,24 +3,38 @@ import { View, Text, StyleSheet } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Profile from './Profile';
+import axios from "axios";
 import Navbar from './components/Navbar';
 import MainScreen from './MainScreen';
+import RewMainScreen from './RewMainScreen';
 import CustomeDrawer from './components/CustomeDrawer';
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 import config from '../config.json'
-export default function AfterLogin({ route }) {
-    const { uemail } = route.params;
+import Submission from './SubmissionDetail';
+export default function AfterLogin({ props, route }) {
+    const { uemail,type,rewData } = route.params;
     const myObject = { key1: uemail, key2: 'value2' };
-    const [selectedTab, setSelectedTab] = useState('MainScreen');
+    console.log("In AFter Login Screen");
+    var iniScreen = ""
+    if(type=='rew'){
+        iniScreen = 'RewMainScreen'
+    }
+    else{
+        iniScreen = 'MainScreen'
+    }
     return (
         <>
-            <Drawer.Navigator drawerContent={(props,uemail)=><CustomeDrawer cage={myObject.key1}  {...props}></CustomeDrawer>} initialRouteName="MainScreen">
-                <Drawer.Screen name="MainScreen" options={{ title: 'Home', headerShown: true }}>
-                    {(props) => <MainScreen {...props}  myObject={myObject} />}
+            <Drawer.Navigator drawerContent={(props) => <CustomeDrawer cage={myObject.key1} rewData={rewData} type={type} Udetails={uemail} {...props}></CustomeDrawer>} initialRouteName={iniScreen}>
+                <Drawer.Screen name="MainScreen" options={{ title: '', headerShown: false }}>
+                    {(props) => <MainScreen {...props} type={type} myObject={myObject} />}
+                </Drawer.Screen>
+                <Drawer.Screen name="RewMainScreen" options={{ title: '', headerShown: false }}>
+                    {(props) => <RewMainScreen {...props} type={type} rewData={rewData} myObject={myObject} />}
                 </Drawer.Screen>
                 {/* <Drawer.Screen name="MainScreen" options={{ title: 'Home', headerShown: true }} initialParams={{ myObject }} component={MainScreen} /> */}
-                <Drawer.Screen name="Profile" options={{ title: 'Profile', headerShown: true }} component={Profile} />
+                <Drawer.Screen name="Profile" options={{ title: 'Profile', headerShown: false }} component={Profile} />
+                <Drawer.Screen name="Submission" options={{ title: 'Submission', headerShown: false }} component={Submission} />
             </Drawer.Navigator>
 
         </>

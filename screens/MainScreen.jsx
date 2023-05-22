@@ -1,26 +1,32 @@
 import Navbar from "./components/Navbar";
-import { Button } from '@react-native-material/core';
 import Svg, { Path } from 'react-native-svg';
 import axios from "axios";
-import { useEffect, useState } from 'react';
-import { Linking, StyleSheet, StatusBar, Text, TextInput, TouchableOpacity, View, ScrollView, RefreshControl, ToastAndroid, Animated } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { Linking, StyleSheet, StatusBar, Text, Dimensions, TextInput, TouchableOpacity, View, ScrollView, RefreshControl, ToastAndroid, Animated } from 'react-native';
 import { Image, Input } from 'react-native-elements';
-import { Screen } from 'react-native-screens';
+import { Button } from '@rneui/themed';
+import { Screen, screensEnabled } from 'react-native-screens';
 import { ScreenHeight } from '@rneui/base';
 import { Formik } from 'formik';
 // images
 import config from '../config.json'
-
 import { logo } from '../assets/nwlogo.png'
 import Foot from './components/Footer';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import LoginPage from "./Test";
-const Tab = createBottomTabNavigator();
+import CardItem from "./components/CardItem";
+import data from '../info.js'
+import { Icon } from "@rneui/themed";
+import TopNav from "./components/TopNav";
+import BottomNav from "./components/BottomNav";
 
-export default function MainScreen({ navigation, myObject }) {
+const Tab = createBottomTabNavigator();
+export default function MainScreen({ navigation, myObject,type }) {
     const uemail = myObject.key1
     const [refreshing, setRefreshing] = useState(false);
     const [Udetails, setUdetails] = useState([]);
+    console.log("In Main Screen");
+    console.log(type);
     const fetchData = () => {
         // Simulate an asynchronous data fetch
         setTimeout(() => {
@@ -36,35 +42,38 @@ export default function MainScreen({ navigation, myObject }) {
     useEffect(() => {
         fetchData();
     }, []);
-    const get = async () => {
-        const requestBody = {
-            email: uemail,
-        };
-        await axios.post(`https://${config.RenderIP}/api/getDetails`, requestBody)
-            .then(response => {
-                // Handle the response data
-                console.log(response.data);
-                setUdetails(JSON.stringify(response.data))
+    // const get = async () => {
+    //     console.log("connecting to backend");
 
-            })
-            .catch(error => {
-                // Handle the error
-                console.error(error);
-            });
+    //     const requestBody = {
+    //         email: uemail,
+    //     };
+    //     await axios.post(`https://${config.RenderIP}/api/getDetails`, requestBody)
+    //         .then(response => {
+    //             // Handle the response data
+    //             console.log(response.data);
+    //             setUdetails(JSON.stringify(response.data))
 
-    }
-    try {
-        get()
+    //         })
+    //         .catch(error => {
+    //             // Handle the error
+    //             console.error(error);
+    //         });
 
-    } catch (error) {
+    // }
+    // try {
+    //     // get()
 
-    }
+    // } catch (error) {
+
+    // }
     function Parser(field) {
         console.log(JSON.parse(Udetails)[field]);
         return `${JSON.parse(Udetails)[field]}`
     }
     return (
         <>
+            <TopNav navigation={navigation}></TopNav>
             <ScrollView
                 contentContainerStyle={{ flexGrow: 1 }}
                 refreshControl={
@@ -74,62 +83,105 @@ export default function MainScreen({ navigation, myObject }) {
                     />
                 }
             >
-
                 <View style={styles.container}>
-                    <View>
-                        <View>
-                            <Text>ON going Conference</Text>
-                            <Text>Related to AI and Bigdata</Text>
-                            <Text>open till Augast 26th 2023</Text>
+                    <Text style={styles.heading}>Important Dates</Text>
+                    <ScrollView
+                        horizontal={true}>
+                        {data.map((item, index) => (
+                            <CardItem key={index} item={item}></CardItem>
+                        ))}
+
+                    </ScrollView>
+                    {/* Submission Module */}
+
+                    <Text style={styles.heading}>Your Submissions</Text>
+                    <View style={styles.subCard}>
+                        <Text style={styles.Tbold}>Paper ID - {JSON.parse(uemail)['paperID']}</Text>
+                        <View style={styles.yon1}>
+                            <Text style={styles.Tbold}>Document Included ? -
+                            </Text>
+                            {(JSON.parse(uemail)['document']).length > 5 ? <>
+                                <View style={[styles.yon, { backgroundColor: 'green' }]} >
+                                    <Icon name={'done'} size={20} color="#ffffff" />
+                                    <Text style={{ color: 'white' }} >
+                                        yes</Text>
+                                </View>
+                            </> : <>
+                                <View style={[styles.yon, { backgroundColor: 'red' }]} >
+                                    <Icon name={'done'} size={20} color="#ffffff" />
+                                    <Text style={{ color: 'white' }} >
+                                        No</Text>
+                                </View></>}
                         </View>
-                        {Udetails.length > 0 && <>
-                            <Text>{Parser('lastName')}</Text>
-                        </>
-                        }
+                        <View style={styles.yon1}>
+                            <Text style={styles.Tbold}>Group Submission ? -
+                            </Text>
+                            {(JSON.parse(uemail)['groupSubmission']) ? <>
+                                <View style={[styles.yon, { backgroundColor: 'green' }]} >
+                                    <Icon name={'done'} size={20} color="#ffffff" />
+                                    <Text style={{ color: 'white' }} >
+                                        yes</Text>
+                                </View>
+                            </> : <>
+                                <View style={[styles.yon, { backgroundColor: 'red' }]} >
+                                    <Icon name={'done'} size={20} color="#ffffff" />
+                                    <Text style={{ color: 'white' }} >
+                                        No</Text>
+                                </View></>}
+                        </View>
+                        <View style={styles.yon1}>
+                            <Text style={styles.Tbold}>Status -
+                            </Text>
+                            {(JSON.parse(uemail)['approved']) == "Pending" ? <>
+                                <View style={[styles.yon, { backgroundColor: '#ffa200' }]} >
+                                    <Text style={{ color: 'white' }} >
+                                        Pending</Text>
+                                </View>
+                            </> : <>
+                            {(JSON.parse(uemail)['approved']) == "Approved" ? <>
+                                <View style={[styles.yon, { backgroundColor: 'green' }]} >
+                                    <Text style={{ color: 'white' }} >
+                                        Approved</Text>
+                                </View>
+                            </> : <>
+                                <View style={[styles.yon, { backgroundColor: 'red' }]} >
+                                    <Text style={{ color: 'white' }} >
+                                        Rejected</Text>
+                                </View></>}</>}
+                        </View>
+                      
 
                     </View>
 
                 </View>
+
             </ScrollView>
+            <BottomNav navigation={navigation} ></BottomNav>
         </>
 
     )
 }
 const styles = StyleSheet.create({
 
-    container: {
-        flex: 1,
-        color: 'white',
-        marginTop: StatusBar.currentHeight
+    heading: {
+        color: 'green',
+        fontSize: 20,
+        paddingLeft: 10,
+        fontWeight: 'bold'
     },
-
-    logoContainer: {
-        alignItems: 'center',
-        padding: 20,
-        marginTop: 70,
+    Tbold: {
+        fontWeight:'bold'
     },
-
-    logoText: {
-        fontSize: 30,
-        color: '#fff',
-    },
-    formContainer: {
-        flex: 1,
-        padding: 20,
-        minHeight: ScreenHeight - StatusBar.currentHeight,
-        maxHeight: ScreenHeight,
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
-        backgroundColor: '#fff',
-        borderRadius: 10,
-        elevation: 10,
-        shadowColor: '#234123', // set shadow color
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 1,
-        shadowRadius: 2,
+    subCard: {
+        padding: 10,
+        margin: 15,
+        overflow: 'hidden',
+        borderColor: 'green',
+        borderWidth: 2,
+        borderRadius: 28,
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        minHeight: 250,
     },
     input: {
         height: 40,
@@ -140,21 +192,25 @@ const styles = StyleSheet.create({
 
     },
 
-    wave: {
-        position: 'absolute',
-        bottom: 0,
-    },
 
-    banner: {
-        padding: 16,
-        width: '100%',
+    yon1: {
+        flexDirection: 'row',
+        flexWrap: 'nowrap',
+        alignItems:'center'
     },
-    wave: {
-        width: '100%', textAlign: 'center', flex: 1,
-        padding: 20,
-        borderTopLeftRadius: 30,
-        borderTopRightRadius: 30,
-        backgroundColor: '#fff'
+    yon: {
+
+        flexDirection: 'row',
+        backgroundColor: 'red',
+        paddingHorizontal: 8,
+        paddingVertical:3,
+        marginLeft: 5,
+        overflow: 'hidden',
+        borderRadius: 20,
+        flexWrap: 'nowrap',
+        justifyContent: 'center',
+        alignItems: 'center'
+
     },
     title: {
         color: 'white',
