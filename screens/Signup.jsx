@@ -10,8 +10,8 @@ import { ScreenHeight } from '@rneui/base';
 import { Formik } from 'formik';
 import config from '../config.json'
 
+import * as Yup from 'yup';
 // images
-import { logo } from '../assets/nwlogo.png'
 import Foot from './components/Footer';
 export default function Signup({ navigation }) {
     const [fName, setfName] = useState();
@@ -21,8 +21,7 @@ export default function Signup({ navigation }) {
     const [password, setPassword] = useState();
     const [confPass, setConfPass] = useState();
     const [visible, setVis] = useState(true);
-
-
+    const [selected, setSelected] = useState('');
 
     function handleLogin() {
         console.log('====================================');
@@ -43,8 +42,9 @@ export default function Signup({ navigation }) {
         }
     }
     // Formik
-    const initialValues = {fName:'',lName:'',aoi:'', email: '', password: '',confPass:'' };
+    const initialValues = { fName: '', lName: '', aoi: '', email: '', password: '', confPass: '' };
     const onSubmit = async (values) => {
+        console.log(selected);
         const requestBody = {
             firstName: values.fName,
             lastName: values.lName,
@@ -56,8 +56,13 @@ export default function Signup({ navigation }) {
         const Clert = async (msg) => {
             alert(msg)
         }
-
-        await axios.post(`https://${config.RenderIP}/api/signup`, requestBody)
+        var url = ''
+        if (selected == 'student') {
+            url = `https://${config.RenderIP}/api/student/signup`
+        }
+        else
+            url = `https://${config.RenderIP}/api/signup`
+        await axios.post(url, requestBody)
             .then(response => {
                 if (response.data.status) {
                     setIsAlertVisible(true);
@@ -83,7 +88,68 @@ export default function Signup({ navigation }) {
 
         console.log(values);
     };
-
+    function containsOnlyLetters(str) {
+        var pattern = /^[A-Za-z]+$/;
+        return pattern.test(str);
+    }
+    function validatePassword(password) {
+        // Regular expression pattern to match the password requirements
+        var pattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+        return pattern.test(password) && !/\s/.test(password);
+    }
+    const validationSchema = Yup.object().shape({
+        fName: Yup.string().required('Cannot be Empty').test(
+            'len',
+            'Invalid input',
+            (val) => {
+                if (val == undefined) {
+                    return true;
+                }
+                return (((val.length >= 1 && val.length <= 20) && (containsOnlyLetters(val))))
+            }
+        ),
+        lName: Yup.string().required('Cannot be Empty').test(
+            'len',
+            'Invalid input',
+            (val) => {
+                if (val == undefined) {
+                    return true;
+                }
+                return (((val.length >= 1 && val.length <= 20) && (containsOnlyLetters(val))))
+            }
+        ),
+        aoi: Yup.string().required('Cannot be Empty').test(
+            'len',
+            'Invalid input',
+            (val) => {
+                if (val == undefined) {
+                    return true;
+                }
+                return (((val.length >= 1 && val.length <= 20) && (containsOnlyLetters(val))))
+            }
+        ),
+        email: Yup.string().email('Invalid email').required('Email is required'),
+        password: Yup.string().required('Password is required').test(
+            'len',
+            'Your Password does not meet Requirements ',
+            (val) => {
+                if (val == undefined) {
+                    return true;
+                }
+                return (((validatePassword(val))))
+            }
+        ),
+        confPass: Yup.string().required('Password is required').test(
+            'len',
+            'Your Password does not meet Requirements ',
+            (val) => {
+                if (val == undefined) {
+                    return true;
+                }
+                return (((validatePassword(val))))
+            }
+        ),
+    });
     const validate = (values) => {
         const errors = {};
 
@@ -116,18 +182,18 @@ export default function Signup({ navigation }) {
     const [isAlertVisible, setIsAlertVisible] = useState(false);
 
     const showAlert = () => {
-      setIsAlertVisible(true);
+        setIsAlertVisible(true);
     };
-  
-    const hideAlert = () => {
-      setIsAlertVisible(false);
-    };
-  
-    const handleConfirm = () => {
-      // Handle user confirmation
 
-      hideAlert();
-      navigation.navigate('Login')
+    const hideAlert = () => {
+        setIsAlertVisible(false);
+    };
+
+    const handleConfirm = () => {
+        // Handle user confirmation
+
+        hideAlert();
+        navigation.navigate('Login')
 
     };
     return (
@@ -138,8 +204,8 @@ export default function Signup({ navigation }) {
                     <View style={{ borderRadius: 25, padding: 10, backgroundColor: 'white' }}>
                         <Image
                             style={{ height: 50, width: 50 }}
-                            // source={{ uri: 'https://logos-download.com/wp-content/uploads/2020/06/Boston_University_Logo.png' }}
-                            source={require('../assets/nwlogo.png')}
+                            source={{ uri: 'https://raw.githubusercontent.com/KondaShivaradhan/cloud/main/nwlogo.png' }}
+                            // source={require('../assets/nwlogo.png')}
                         >
                         </Image>
                     </View>
@@ -147,9 +213,9 @@ export default function Signup({ navigation }) {
                     <Text style={styles.title}>2023</Text>
                     {/* <Button title="check" onPress={()=>setVis(!visible)}></Button> */}
                 </View>
-                <Modal visible={isAlertVisible} style={{ borderColor:'green',borderWidth:2}} onRequestClose={hideAlert} transparent>
-                    <View style={{backgroundColor:'#2342', flex: 1, justifyContent: 'center',alignItems: 'center' }}>
-                        <View style={{borderColor:'green', elevation:10,borderWidth:2, backgroundColor: '#fff', padding: 20, borderRadius: 10 }}>
+                <Modal visible={isAlertVisible} style={{ borderColor: 'green', borderWidth: 2 }} onRequestClose={hideAlert} transparent>
+                    <View style={{ backgroundColor: '#2342', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={{ borderColor: 'green', elevation: 10, borderWidth: 2, backgroundColor: '#fff', padding: 20, borderRadius: 10 }}>
                             <Text style={{ fontSize: 14 }}>Saved Successfully</Text>
                             {/* <Button style={{width:40}} title="OK" color='green' onPress={handleConfirm} /> */}
                         </View>
@@ -162,7 +228,10 @@ export default function Signup({ navigation }) {
                     {/* <Animated.View style={[styles.container, { opacity }]}>
                         <Text style={styles.text}>Shiva</Text>
                     </Animated.View> */}
-                    <Formik initialValues={initialValues} onSubmit={onSubmit} validate={validate}>
+                    <Formik initialValues={initialValues} onSubmit={onSubmit}
+                        // validate={validate}
+                        validationSchema={validationSchema}
+                    >
                         {({ handleChange, handleBlur, handleSubmit, values, touched, errors }) => (
                             <View>
                                 <TextInput
@@ -199,7 +268,7 @@ export default function Signup({ navigation }) {
                                 {touched.email && errors.email ? <Text style={styles.error}>{errors.email}</Text> : <Text style={styles.error}></Text>}
 
                                 <TextInput
-                                    style={[touched.aoi &&  errors.aoi ? styles.err : styles.input]}
+                                    style={[touched.aoi && errors.aoi ? styles.err : styles.input]}
                                     onChangeText={handleChange('aoi')}
                                     onBlur={handleBlur('aoi')}
                                     value={values.aoi}
@@ -231,7 +300,8 @@ export default function Signup({ navigation }) {
                                 {touched.confPass && errors.confPass ? <Text style={styles.error}>{errors.confPass}</Text> : <Text style={styles.error}></Text>}
 
                                 {/* {errors.password && <Text style={styles.error}>{errors.password}</Text>} */}
-                                <Button style={{ alignSelf: "center", width: 100, marginTop: 10, backgroundColor: 'green' }} onPress={handleSubmit} title="SignUp" />
+                                <Button style={{ alignSelf: "center", width: 250, marginTop: 10, backgroundColor: 'green' }} onPress={() => { setSelected('author'); handleSubmit() }} title="SignUp as Author" />
+                                <Button style={{ alignSelf: "center", width: 250, marginTop: 10, backgroundColor: 'green' }} onPress={() => { setSelected('student'); handleSubmit() }} title="SignUp as Student" />
                                 {/* <View>
                                     <Button title="Login" onPress={() => handleLogin()} style={{ alignSelf: "center", marginTop: 10, backgroundColor: 'green' }} />
                                 </View> */}

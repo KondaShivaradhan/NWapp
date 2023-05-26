@@ -11,10 +11,10 @@ import config from '../config.json'
 import { Button, Icon } from '@rneui/themed';
 
 // images
-import { logo } from '../assets/nwlogo.png'
 import Foot from './components/Footer';
 export default function AuthScreen({ navigation }) {
     var selected = ""
+    
     const [email, setEmail] = useState();
     const [pass, setPass] = useState();
     const [visible, setVis] = useState(true);
@@ -59,107 +59,158 @@ export default function AuthScreen({ navigation }) {
         };
         console.log(selected);
         switch (selected) {
-            case 'auth':
+            case 'student':
                 try {
-                await axios.post(`https://${config.RenderIP}/api/login`, requestBody)
-                    .then(response => {
-                        console.log(response.data);
+                    await axios.post(`https://${config.RenderIP}/api/student/login`, requestBody)
+                        .then(response => {
+                            console.log(response.data);
+                            console.log(response.data.status);
+                            if (response.data.status) {
+                                const Udetails = JSON.stringify(response.data.data)
 
-                        console.log(response.data.status);
-                        if (response.data.status) {
-                            const get = async () => {
-                                console.log("connecting to backend at  Page");
+                                navigation.navigate('afterlog', { uemail: Udetails, type: selected })
 
-                                const requestBody = {
-                                    email: values.email,
-                                };
-                                await axios.post(`https://${config.RenderIP}/api/getDetails`, requestBody)
-                                    .then(response => {
-                                        // Handle the response data
-                                        // setUdetails(JSON.stringify(response.data))
-                                        // navigation.navigate('afterlog', { uemail: `${values.email}` })
-                                        const Udetails = JSON.stringify(response.data)
-                                        navigation.navigate('afterlog', { uemail: Udetails,type:selected })
+                                // const get = async () => {
+                                //     console.log("connecting to backend at  Page");
 
-                                    })
-                                    .catch(error => {
-                                        // Handle the error
-                                        console.log(error);
-                                    });
+                                //     const requestBody = {
+                                //         email: values.email,
+                                //     };
+                                //     await axios.post(`https://${config.RenderIP}/api/getDetails`, requestBody)
+                                //         .then(response => {
+                                //             // Handle the response data
+                                //             // setUdetails(JSON.stringify(response.data))
+                                //             // navigation.navigate('afterlog', { uemail: `${values.email}` })
+                                //             const Udetails = JSON.stringify(response.data)
+                                //             navigation.navigate('afterlog', { uemail: Udetails, type: selected })
 
+                                //         })
+                                //         .catch(error => {
+                                //             // Handle the error
+                                //             console.log(error);
+                                //         });
+
+                                // }
+                                // try {
+                                //     get()
+                                // }
+                                // catch (e) {
+                                //     console.log(e);
+                                // }
                             }
-                            try {
-                                get()
-                            }
-                            catch (e) {
-                                console.log(e);
-                            }
-                        }
-                        else
-                            alert('Auth Failed')
-                    })
-                    .catch(error => {
-                        // Handle the error
-                        console.error(error);
-                    });
+                            else
+                                alert('Auth Failed')
+                        })
+                        .catch(error => {
+                            // Handle the error
+                            console.error(error);
+                        });
                 } catch (error) {
-                    
+
+                }
+                break;
+            case 'author':
+                try {
+                    await axios.post(`https://${config.RenderIP}/api/login`, requestBody)
+                        .then(response => {
+                            console.log(response.data);
+
+                            console.log(response.data.status);
+                            if (response.data.status) {
+                                const get = async () => {
+                                    console.log("connecting to backend at  Page");
+
+                                    const requestBody = {
+                                        email: values.email,
+                                    };
+                                    await axios.post(`https://${config.RenderIP}/api/getDetails`, requestBody)
+                                        .then(response => {
+                                            // Handle the response data
+                                            // setUdetails(JSON.stringify(response.data))
+                                            // navigation.navigate('afterlog', { uemail: `${values.email}` })
+                                            const Udetails = JSON.stringify(response.data)
+                                            navigation.navigate('afterlog', { uemail: Udetails, type: selected })
+
+                                        })
+                                        .catch(error => {
+                                            // Handle the error
+                                            console.log(error);
+                                        });
+
+                                }
+                                try {
+                                    get()
+                                }
+                                catch (e) {
+                                    console.log(e);
+                                }
+                            }
+                            else
+                                alert('Auth Failed')
+                        })
+                        .catch(error => {
+                            // Handle the error
+                            console.error(error);
+                        });
+                } catch (error) {
+
                 }
                 break;
 
-            case 'rew':
+            case 'reviewer':
                 try {
-                await axios.post(`https://${config.RenderIP}/api/reviewer/login`, requestBody)
-                    .then(response => {
-                        console.log(response.data);
+                    await axios.post(`https://${config.RenderIP}/api/reviewer/login`, requestBody)
+                        .then(response => {
+                            console.log(response.data);
 
-                        console.log(response.data.status);
-                        if (response.data.status) {
-                            const rewData = response.data.data
-                           
-                            const get = async () => {
+                            console.log(response.data.status);
+                            if (response.data.status) {
+                                const rewData = response.data.data
 
-                                const requestBody = {
-                                    email: values.email,
-                                    headers: {
-                                        'token': response.data.token, // Example header
-                                        // Add more headers if needed
-                                      },
-                                };
-                                await axios.get(`https://${config.RenderIP}/api/reviewer/project`, requestBody)
-                                    .then(response => {
-                                        // Handle the response data
-                                        // setUdetails(JSON.stringify(response.data))
-                                        // navigation.navigate('afterlog', { uemail: `${values.email}` })
-                                        console.log('====================================');
-                                        // console.log(response.data);
-                                        console.log('====================================');
-                                        const Udetails = JSON.stringify(response.data)
-                                        navigation.navigate('afterlog', { uemail: Udetails,type:selected,rewData:rewData })
+                                const get = async () => {
 
-                                    })
-                                    .catch(error => {
-                                        // Handle the error
-                                        console.log(error);
-                                    });
+                                    const requestBody = {
+                                        email: values.email,
+                                        headers: {
+                                            'token': response.data.token, // Example header
+                                            // Add more headers if needed
+                                        },
+                                    };
+                                    await axios.get(`https://${config.RenderIP}/api/reviewer/project`, requestBody)
+                                        .then(response => {
+                                            // Handle the response data
+                                            // setUdetails(JSON.stringify(response.data))
+                                            // navigation.navigate('afterlog', { uemail: `${values.email}` })
+                                            console.log('====================================');
+                                            // console.log(response.data);
+                                            console.log('====================================');
+                                            const Udetails = JSON.stringify(response.data)
+                                            navigation.navigate('afterlog', { uemail: Udetails, type: selected, rewData: rewData })
+
+                                        })
+                                        .catch(error => {
+                                            // Handle the error
+                                            console.log(error);
+                                        });
+                                }
+                                try {
+                                    get()
+                                }
+                                catch (e) {
+                                    console.log(e);
+                                }
                             }
-                            try {
-                                get()
-                            }
-                            catch (e) {
-                                console.log(e);
-                            }
-                        }
-                        else
-                            alert('Auth Failed')
-                    })
-                    .catch(error => {
-                        // Handle the error
-                        console.error(error);
-                    });
+                            else
+                                alert('Auth Failed')
+                        })
+                        .catch(error => {
+                            // Handle the error
+                            console.error(error);
+                        });
                 } catch (error) {
-                    
+
                 }
+
             default:
                 break;
         }
@@ -188,8 +239,7 @@ export default function AuthScreen({ navigation }) {
                     <View style={{ borderRadius: 25, padding: 10, backgroundColor: 'white' }}>
                         <Image
                             style={{ height: 50, width: 50 }}
-                            // source={{ uri: 'https://logos-download.com/wp-content/uploads/2020/06/Boston_University_Logo.png' }}
-                            source={require('../assets/nwlogo.png')}
+                            source={{ uri: 'https://raw.githubusercontent.com/KondaShivaradhan/cloud/main/nwlogo.png' }}
                         >
                         </Image>
                     </View>
@@ -231,20 +281,19 @@ export default function AuthScreen({ navigation }) {
 
                                 {/* {errors.password && <Text style={styles.error}>{errors.password}</Text>} */}
                                 <View style={{ flexDirection: 'row', gap: 10, justifyContent: 'center' }}>
-                                    <Button radius={'lg'} type="solid" color={'green'} onPress={() => { handleSubmit(); selected = "auth" }}  >
+                                    <Button radius={'lg'} type="solid" size='sm' color={'green'} onPress={() => { handleSubmit(); selected = "author" }}  >
                                         Author
-                                        <Icon style={{ marginLeft: 5 }} name="person" color="white" />
+                                        <Icon style={{ marginLeft: 0 }} name="person" color="white" />
                                     </Button>
-                                    <Button radius={'lg'} type="solid" color={'green'} onPress={() => { handleSubmit(); selected = "rew" }}  >
+                                    <Button radius={'lg'} type="solid" size='sm' color={'green'} onPress={() => { handleSubmit(); selected = "reviewer" }}  >
                                         Reviewer
-                                        <Icon style={{ marginLeft: 5 }} name="auto-fix-high" color="white" />
+                                        <Icon style={{ marginLeft: 0 }} name="edit" color="white" />
                                     </Button>
-                                    {/* <Button style={{ backgroundColor: 'green' }} onPress={handleSubmit} title="Author" />
-                                    <Button style={{ backgroundColor: 'green' }} onPress={handleSubmit} title="Reviewer" /> */}
+                                    <Button radius={'lg'} type="solid" size='sm' color={'green'} onPress={() => { handleSubmit(); selected = "student" }}  >
+                                        Student
+                                        <Icon style={{ marginLeft: 0 }} name="school" color="white" />
+                                    </Button>
                                 </View>
-                                {/* <View>
-                                    <Button title="" onPress={() => handleLogin()} style={{ alignSelf: "center", marginTop: 10, backgroundColor: 'green' }} />
-                                </View> */}
                                 <View style={{ margin: 10 }}>
                                     <Text style={{ textAlign: 'center' }}>
                                         Don't have an account?  <Text style={styles.link} onPress={() => navigation.navigate('signup')}>

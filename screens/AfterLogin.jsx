@@ -11,13 +11,15 @@ import CustomeDrawer from './components/CustomeDrawer';
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 import config from '../config.json'
-import Submission from './SubmissionDetail';
+import SubScreen from './AuthScreens/SubScreen';
+import AssignPaper from './RewScreens/AssignPaper';
 export default function AfterLogin({ props, route }) {
     const { uemail,type,rewData } = route.params;
     const myObject = { key1: uemail, key2: 'value2' };
     console.log("In AFter Login Screen");
+    console.log(rewData);
     var iniScreen = ""
-    if(type=='rew'){
+    if(type=='reviewer'){
         iniScreen = 'RewMainScreen'
     }
     else{
@@ -33,8 +35,15 @@ export default function AfterLogin({ props, route }) {
                     {(props) => <RewMainScreen {...props} type={type} rewData={rewData} myObject={myObject} />}
                 </Drawer.Screen>
                 {/* <Drawer.Screen name="MainScreen" options={{ title: 'Home', headerShown: true }} initialParams={{ myObject }} component={MainScreen} /> */}
-                <Drawer.Screen name="Profile" options={{ title: 'Profile', headerShown: false }} component={Profile} />
-                <Drawer.Screen name="Submission" options={{ title: 'Submission', headerShown: false }} component={Submission} />
+                <Drawer.Screen name="Profile" options={{ title: 'Profile', headerShown: false }}  >
+                {(props) => <Profile {...props} rewData={rewData} Udata={uemail} type={type} />}
+                    </Drawer.Screen>
+                <Drawer.Screen name="AuthSubmission" options={{  headerShown: false }} >
+                {(props) => <SubScreen {...props} Udata={uemail} />}
+                </Drawer.Screen>
+                <Drawer.Screen name="RewSubmission" options={{  headerShown: false }} >
+                {(props) => <AssignPaper {...props} Udata={uemail} type={type} />}
+                </Drawer.Screen>
             </Drawer.Navigator>
 
         </>

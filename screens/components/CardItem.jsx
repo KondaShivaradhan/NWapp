@@ -20,7 +20,7 @@ const CarouselCardItem = ({ item, index }) => {
         </Text> - {item.Cdate}</Text>
       <Text style={styles.dates}><Text style={styles.heading}>Submission Deadline</Text> - {item.deadline}</Text>
       <Text style={styles.dates}><Text style={styles.heading}>Result dates</Text> - {item.resultDate}</Text>
-      <Button size='sm' color={'green'} onPress={()=>{alert('Visit Website')}} >View More</Button>
+      <Button size='sm' style={{borderRadius:20}} color={'green'} onPress={()=>{alert('Visit Website')}} >View More</Button>
       {/* <Text style={styles.body}></Text> */}
 
     </View>

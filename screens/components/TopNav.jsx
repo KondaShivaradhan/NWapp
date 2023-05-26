@@ -27,7 +27,7 @@ export default function TopNav({ navigation }) {
                 <View style={styles.logoContainer}>
                     <Image
                         style={styles.logo}
-                        source={require('../../assets/nwlogo.png')}
+                        source={{uri:'https://raw.githubusercontent.com/KondaShivaradhan/cloud/main/nwlogo.png'}}
                     />
                 </View>
             </View>

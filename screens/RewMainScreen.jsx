@@ -10,9 +10,7 @@ import { ScreenHeight } from '@rneui/base';
 import { Formik } from 'formik';
 // images
 import config from '../config.json'
-import { logo } from '../assets/nwlogo.png'
 import Foot from './components/Footer';
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import LoginPage from "./Test";
 import CardItem from "./components/CardItem";
 import data from '../info.js'
@@ -20,12 +18,13 @@ import { Icon } from "@rneui/themed";
 import TopNav from "./components/TopNav";
 import BottomNav from "./components/BottomNav";
 
-const Tab = createBottomTabNavigator();
-export default function RewMainScreen({ navigation, myObject, rewData }) {
+export default function RewMainScreen({ navigation, myObject, rewData, type }) {
     const uemail = myObject.key1
     const [refreshing, setRefreshing] = useState(false);
     const [Udetails, setUdetails] = useState([]);
-    console.log("In Rew Main Screen");
+    console.log("In reviewer Main Screen");
+    console.log(uemail);
+    console.log(rewData);
     const projectData = JSON.parse(uemail).project
     const fetchData = () => {
         // Simulate an asynchronous data fetch
@@ -59,7 +58,7 @@ export default function RewMainScreen({ navigation, myObject, rewData }) {
         <>
             <TopNav navigation={navigation}></TopNav>
             <ScrollView
-                contentContainerStyle={{ flexGrow: 1 }}
+                // contentContainerStyle={{ flexGrow: 1 }}
                 refreshControl={
                     <RefreshControl
                         refreshing={refreshing}
@@ -97,7 +96,7 @@ export default function RewMainScreen({ navigation, myObject, rewData }) {
 
 
             </ScrollView>
-            <BottomNav navigation={navigation}></BottomNav>
+            <BottomNav navigation={navigation} type={type}></BottomNav>
         </>
 
     )
