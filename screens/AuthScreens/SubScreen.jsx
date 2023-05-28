@@ -10,12 +10,49 @@ import * as FileSystem from 'expo-file-system';
 
 
 const SubScreen = ({ navigation, Udata }) => {
-    const downloadFile = async (url) => {
-        console.warn(FileSystem.documentDirectory);
-        const fileUri = FileSystem.documentDirectory + 'file.pdf';
-        const downloadObject = FileSystem.createDownloadResumable(url, fileUri);
-        const { uri } = await downloadObject.downloadAsync();
-        console.log('Finished downloading to ', uri);
+    // const downloadFile = async (url) => {
+    //     console.warn(FileSystem.documentDirectory);
+    //     const fileUri = FileSystem.documentDirectory + 'file.pdf';
+    //     const downloadObject = FileSystem.createDownloadResumable(url, fileUri);
+    //     const { uri } = await downloadObject.downloadAsync();
+    //     console.log('Finished downloading to ', uri);
+    // };
+    const downloadFromUrl = async (url) => {
+        try {
+            const filename = "file.pdf";
+            const result = await FileSystem.downloadAsync(
+                url,
+                FileSystem.documentDirectory + filename
+            );
+            console.log(result);
+            var downloadF = Parser('lastName') + "_" + Parser('paperID')
+            save(result.uri, `${downloadF + '.pdf'}`, 'Application/pdf');
+        } catch (error) {
+
+        }
+
+    };
+    const save = async (uri, filename, mimetype) => {
+        try {
+            if (Platform.OS === "android") {
+                const permissions = await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
+                if (permissions.granted) {
+                    const base64 = await FileSystem.readAsStringAsync(uri, { encoding: FileSystem.EncodingType.Base64 });
+                    await FileSystem.StorageAccessFramework.createFileAsync(permissions.directoryUri, filename, mimetype)
+                        .then(async (uri) => {
+                            await FileSystem.writeAsStringAsync(uri, base64, { encoding: FileSystem.EncodingType.Base64 });
+                        })
+                        .catch(e => console.log(e));
+                } else {
+                    shareAsync(uri);
+                }
+            } else {
+                shareAsync(uri);
+            }
+        } catch (error) {
+
+        }
+
     };
     const [clicked, setclicked] = useState([10, 10]);
     console.log("in Author SUbmision Screen");
@@ -35,8 +72,7 @@ const SubScreen = ({ navigation, Udata }) => {
                         <Text style={styles.textSetting}>
                             <Text style={styles.heading}>PaperID -</Text>
                             {Parser('paperID')}</Text>
-
-                        <Text style={styles.textSetting}>
+                        <Text style={[styles.textSetting]}>
                             <Text style={styles.heading}>Title -</Text>
                             {Parser('title')}</Text>
                         {/* <Text style={styles.textSetting}>
@@ -66,21 +102,25 @@ const SubScreen = ({ navigation, Udata }) => {
                         <View style={styles.yon1}>
                             <Text style={styles.heading}>Document Included ? -
                             </Text>
-                            {(JSON.parse(Udata)['document']).length > 5 ? <>
+                            {(JSON.parse(Udata)['document']).length > 5 ? <View style={{}}>
                                 <View style={[styles.yon, { backgroundColor: 'green' }]} >
                                     <Icon name={'done'} size={20} color="#ffffff" />
                                     <Text style={{ color: 'white' }} >
                                         yes</Text>
                                 </View>
-                                <Button onPress={() => downloadFile(JSON.parse(Udata)['document'])} title={'download file'}></Button>
 
-                            </> : <>
+                            </View> : <>
                                 <View style={[styles.yon, { backgroundColor: 'red' }]} >
                                     <Icon name={'highlight-off'} size={20} color="#ffffff" />
                                     <Text style={{ color: 'white' }} >
                                         No</Text>
                                 </View></>}
                         </View>
+                        {(JSON.parse(Udata)['document']).length > 5 ?
+                            <View style={{ width: 100, marginLeft: 15, }}>
+                                <Button color={'green'} size='sm' radius={'25'} onPress={() => downloadFromUrl(JSON.parse(Udata)['document'])} title={'Download'}></Button>
+                            </View> :
+                            null}
                         <View style={styles.yon1}>
                             <Text style={styles.heading}>Status -
                             </Text>
@@ -103,10 +143,6 @@ const SubScreen = ({ navigation, Udata }) => {
                                             Rejected</Text>
                                     </View></>}</>}
                         </View>
-                        {JSON.parse(Udata)['reviewerApproval'].forEach(element => {
-                            <Text>Came Here</Text>
-                        })}
-                        {/* {(JSON.parse(Udata)['approved'] == 'Approved') ? */}
                         {(true) ?
                             <Text style={styles.textSetting}>
                                 {(JSON.parse(Udata)['reviewerApproval']).map((element, count) => (
@@ -151,76 +187,6 @@ const SubScreen = ({ navigation, Udata }) => {
                                 ))}
                             </Text>
                             : null}
-
-
-
-                        {/* {(JSON.parse(Udata)['document']).length > 5 ? <>
-                        <Button size='sm' color={'green'} title={'Download'}></Button>
-                    </> : <>
-                    </>} */}
-                        {/* <Button title={'Download'}></Button> */}
-                        {/* <View style={styles.subCard}>
-                            <Text style={styles.Tbold}>Paper ID - {JSON.parse(Udata)['paperID']}</Text>
-                            <View style={styles.yon1}>
-                                <Text style={styles.Tbold}>Document Included ? -
-                                </Text>
-                                {(JSON.parse(Udata)['document']).length > 5 ? <>
-                                    <View style={[styles.yon, { backgroundColor: 'green' }]} >
-                                        <Icon name={'done'} size={20} color="#ffffff" />
-                                        <Text style={{ color: 'white' }} >
-                                            yes</Text>
-                                    </View>
-                                </> : <>
-                                    <View style={[styles.yon, { backgroundColor: 'red' }]} >
-                                        <Icon name={'highlight-off'} size={20} color="#ffffff" />
-                                        <Text style={{ color: 'white' }} >
-                                            No</Text>
-                                    </View></>}
-                            </View>
-                            <View style={styles.yon1}>
-                                <Text style={styles.Tbold}>Group Submission ? -
-                                </Text>
-                                {(JSON.parse(Udata)['groupSubmission']) ? <>
-                                    <View style={[styles.yon, { backgroundColor: 'green' }]} >
-                                        <Icon name={'done'} size={20} color="#ffffff" />
-                                        <Text style={{ color: 'white' }} >
-                                            yes</Text>
-                                    </View>
-                                </> : <>
-                                    <View style={[styles.yon, { backgroundColor: 'red' }]} >
-                                        <Icon name={'highlight-off'} size={20} color="#ffffff" />
-                                        <Text style={{ color: 'white' }} >
-                                            No</Text>
-                                    </View></>}
-                            </View>
-                            <View style={styles.yon1}>
-                                <Text style={styles.Tbold}>Status -
-                                </Text>
-                                {(JSON.parse(Udata)['approved']) == "Pending" ? <>
-                                    <View style={[styles.yon, { backgroundColor: '#ffa200' }]} >
-                                        <Icon name={'error'} size={20} color="#ffffff" />
-
-                                        <Text style={{ color: 'white' }} >
-                                            Pending</Text>
-                                    </View>
-                                </> : <>
-                                    {(JSON.parse(Udata)['approved']) == "Approved" ? <>
-                                        <View style={[styles.yon, { backgroundColor: 'green' }]} >
-                                            <Icon name={'check-circle'} size={20} color="#ffffff" />
-
-                                            <Text style={{ color: 'white' }} >
-                                                Approved</Text>
-                                        </View>
-                                    </> : <>
-                                        <View style={[styles.yon, { backgroundColor: 'red' }]} >
-                                            <Icon name={'cancel'} size={20} color="#ffffff" />
-
-                                            <Text style={{ color: 'white' }} >
-                                                Rejected</Text>
-                                        </View></>}</>}
-                            </View>
-                            <Button color={'green'} size="sm" onPress={() => { navigation.navigate('AuthSubmission', { Udata: Udata }) }} title={'More'}></Button>
-                        </View> */}
                     </> :
                         <View style={[styles.subCard, { minHeight: 100 }]}>
                             <Text style={[styles.Tbold, { textAlign: 'center' }]}> No Submissions</Text>
@@ -244,7 +210,9 @@ const styles = StyleSheet.create({
         margin: 10,
         marginBottom: 150,
         // borderWidth: 2,
+        // alignItems: 'center',
         borderColor: 'green',
+        gap: 1,
         borderRadius: 28,
     },
     table: {
@@ -264,7 +232,7 @@ const styles = StyleSheet.create({
         flexWrap: 'nowrap',
         alignItems: 'center',
         marginHorizontal: 15,
-        marginVertical: 5,
+        marginVertical: 10,
     },
     yon: {
 

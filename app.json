@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "NWConforence",
+    "name": "NWConference",
     "slug": "NWConforence",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/nwicon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",

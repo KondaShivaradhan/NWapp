@@ -1,279 +1,200 @@
 {
     "project": [
-        {
-            "lastName": "Maram",
-            "groupEmail": "",
-            "areaOfInterest": "AI",
-            "otherKeyword": "",
-            "groupSubmission": false,
+      {
+        "lastName": "Maram",
+        "groupEmail": "",
+        "wantToAttend": false,
+        "areaOfInterest": "Human resources management,Talent management,AI",
+        "groupSubmission": false,
+        "firstName": "Deepak Reddy",
+        "confirmPassword": "123456",
+        "email": "deepakreddy2634@gmail.com",
+        "document": "https://res.cloudinary.com/dd1uzjqg8/image/upload/v1684789394/1684789393159.pdf",
+        "otherKeyword": "AI-enabled recruiting,Human resources management,Talent management",
+        "abstract": "A large body of research has well established that changes in net balances between labor supply and demand can drive competition for human capital. We propose that AI-enabled recruiting tools constitute a force that will intensify the war for talent above and beyond episodic changes in net balances. We also propose that three seismic shifts will further intensify the war for talent by increasing the value of human capital and lowering its switching costs. Lastly, we bridge human resource management and military escalation literatures and examine how three key onset conditions relative to the use of AI-enabled recruiting tools have the potential to spark an arms race for those tools. Finally, we examine the managerial implications of these dynamics so that managers prevail not just in shortterm skirmishes but also in the long-term war for talent.",
+        "keyword": [
+          {
+            "label": "Other",
+            "value": "Other"
+          }
+        ],
+        "title": "AI-enabled recruiting in the war for talent",
+        "paperID": "007",
+        "submisstionType": "user",
+        "approved": "Approved",
+        "reviewers": [
+          {
+            "firstName": "prasanna",
+            "lastName": "konakanchi",
+            "wantToReview": "",
+            "areaOfInterest": "software components,Reo coordination model,Data Mining",
+            "confirmPassword": "123456",
+            "email": "konakanchiprasanna555@gmail.com",
+            "updatedAt": 1684788786936,
+            "numberOfPapersAssigned": 0
+          },
+          {
+            "firstName": "Sai Karthik",
+            "lastName": "Malyala",
+            "wantToReview": "",
+            "areaOfInterest": "Software engineering, Cloud computing, Block chain",
+            "confirmPassword": "123456",
+            "email": "sai.karthik.malyala@gmail.com",
+            "updatedAt": 1684788837843,
+            "numberOfPapersAssigned": 0
+          },
+          {
             "firstName": "Prathyusha",
+            "lastName": "Maram",
+            "wantToReview": "",
+            "areaOfInterest": "Electricity data,Data mining,AI",
             "confirmPassword": "123456",
             "email": "prathyu.maram@gmail.com",
-            "document": "https://res.cloudinary.com/dd1uzjqg8/image/upload/v1684356955/1684356954950.pdf",
-            "abstract": "Sample",
-            "keyword": [
-                {
-                    "label": "Data Structures",
-                    "value": "Data Structures"
-                },
-                {
-                    "label": "ML",
-                    "value": "ML"
-                }
-            ],
-            "title": "title",
-            "paperID": "YiMpW409",
-            "reviewers": [
-                {
-                    "firstName": "Sai Karthik",
-                    "lastName": "Malyala",
-                    "areaOfInterest": "Software engineering, Cloud computing, Block chain",
-                    "confirmPassword": "123456",
-                    "email": "malyala3333@gmail.com",
-                    "updatedAt": 1683920247770
-                },
-                {
-                    "firstName": "Sai Karthik",
-                    "lastName": "Malyala",
-                    "wantToReview": "",
-                    "areaOfInterest": "Software engineering, Cloud computing, Block chain",
-                    "confirmPassword": "123456",
-                    "email": "sai.karthik.malyala@gmail.com",
-                    "updatedAt": 1684164063470
-                },
-                {
-                    "firstName": "Sai",
-                    "lastName": "K",
-                    "wantToReview": "",
-                    "areaOfInterest": "Software engineering, Cloud computing, Block chain",
-                    "confirmPassword": "123456",
-                    "email": "saik14111222@gmail.com",
-                    "updatedAt": 1684354546830
-                }
-            ],
-            "reviewerApproval": [
-                {
-                    "presentation": {
-                        "comments": "Okay",
-                        "points": "10"
-                    },
-                    "theoretical": {
-                        "comments": "Okay",
-                        "points": "9"
-                    },
-                    "approve": "Approved",
-                    "findings": {
-                        "comments": "Okay",
-                        "points": "9"
-                    },
-                    "email": "sai.karthik.malyala@gmail.com",
-                    "relavance": {
-                        "comments": "Okay",
-                        "points": "9"
-                    },
-                    "objective": {
-                        "comments": "Okay",
-                        "points": "9"
-                    }
-                },
-                {
-                    "presentation": {
-                        "comments": "Okay",
-                        "points": "10"
-                    },
-                    "theoretical": {
-                        "comments": "Okay",
-                        "points": "9"
-                    },
-                    "approve": "Strongly Approved",
-                    "findings": {
-                        "comments": "Okay",
-                        "points": "9"
-                    },
-                    "email": "malyala3333@gmail.com",
-                    "relavance": {
-                        "comments": "Okay",
-                        "points": "9"
-                    },
-                    "objective": {
-                        "comments": "Okay",
-                        "points": "9"
-                    }
-                },
-                {
-                    "presentation": {
-                        "comments": "Okay",
-                        "points": "10"
-                    },
-                    "theoretical": {
-                        "comments": "Okay",
-                        "points": "9"
-                    },
-                    "approve": "Weekly Approved",
-                    "findings": {
-                        "comments": "Okay",
-                        "points": "9"
-                    },
-                    "email": "saik14111222@gmail.com",
-                    "relavance": {
-                        "comments": "Okay",
-                        "points": "9"
-                    },
-                    "objective": {
-                        "comments": "Okay",
-                        "points": "9"
-                    }
-                }
-            ],
-            "approved": "Approved",
-            "updatedAt": 1684357376997
-        },
-        {
-            "lastName": "Malyala",
-            "wantToAttend": false,
-            "areaOfInterest": "Software engineering, Cloud computing, Block chain",
-            "payementStatus": "",
-            "firstName": "Sai Karthik",
-            "approved": "Pending",
-            "confirmPassword": "123456",
-            "reviewerApproval": [],
+            "updatedAt": 1684788043358,
+            "numberOfPapersAssigned": 0
+          }
+        ],
+        "reviewerApproval": [
+          {
+            "presentation": {
+              "comments": "ok",
+              "points": "10"
+            },
+            "theoretical": {
+              "comments": "ok",
+              "points": "10"
+            },
+            "approve": "Strongly Approved",
+            "findings": {
+              "comments": "ok",
+              "points": "10"
+            },
+            "email": "konakanchiprasanna555@gmail.com",
+            "relavance": {
+              "comments": "ok",
+              "points": "10"
+            },
+            "objective": {
+              "comments": "ok",
+              "points": "10"
+            }
+          },
+          {
+            "presentation": {
+              "comments": "o",
+              "points": "10"
+            },
+            "theoretical": {
+              "comments": "ok",
+              "points": "10"
+            },
+            "approve": "Strongly Approved",
+            "findings": {
+              "comments": "ok",
+              "points": "10"
+            },
             "email": "sai.karthik.malyala@gmail.com",
-            "groupEmail": "samireddy2403@gmail.com",
-            "document": "https://res.cloudinary.com/dd1uzjqg8/image/upload/v1684356891/1684356891103.pdf",
-            "otherKeyword": "Jaffa",
-            "groupSubmission": true,
-            "abstract": "Sample",
-            "keyword": [
-                {
-                    "label": "Full Stack",
-                    "value": "Full Stack"
-                },
-                {
-                    "label": "ML",
-                    "value": "ML"
-                },
-                {
-                    "label": "Other",
-                    "value": "Other"
-                }
-            ],
-            "title": "Title",
-            "paperID": "UWDjjwUN",
-            "updatedAt": 1684356893074,
-            "reviewers": [
-                {
-                    "firstName": "Sai",
-                    "lastName": "K",
-                    "wantToReview": "",
-                    "areaOfInterest": "Software engineering, Cloud computing, Block chain",
-                    "confirmPassword": "123456",
-                    "email": "saik14111222@gmail.com",
-                    "updatedAt": 1684354546830
-                },
-                {
-                    "firstName": "Sai Karthik",
-                    "lastName": "Malyala",
-                    "areaOfInterest": "Software engineering, Cloud computing, Block chain",
-                    "confirmPassword": "123456",
-                    "email": "malyala3333@gmail.com",
-                    "updatedAt": 1683920247770
-                },
-                {
-                    "firstName": "Prathyusha",
-                    "lastName": "Maram",
-                    "areaOfInterest": "AI",
-                    "confirmPassword": "123456",
-                    "email": "prathyu.maram@gmail.com",
-                    "updatedAt": 1683851757997
-                }
-            ]
-        },
-        {
-            "lastName": "Amireddy",
-            "groupEmail": "",
-            "wantToAttend": false,
-            "areaOfInterest": "Software engineering, Cloud computing, Block chain",
-            "payementStatus": "",
-            "otherKeyword": "",
-            "groupSubmission": false,
-            "firstName": "shruthi",
-            "approved": "Pending",
+            "relavance": {
+              "comments": "ok",
+              "points": "10"
+            },
+            "objective": {
+              "comments": "ok",
+              "points": "10"
+            }
+          },
+          {
+            "presentation": {
+              "comments": "o",
+              "points": "10"
+            },
+            "theoretical": {
+              "comments": "ok",
+              "points": "10"
+            },
+            "approve": "Strongly Approved",
+            "findings": {
+              "comments": "ok",
+              "points": "10"
+            },
+            "email": "prathyu.maram@gmail.com",
+            "relavance": {
+              "comments": "ok",
+              "points": "10"
+            },
+            "objective": {
+              "comments": "ok",
+              "points": "10"
+            }
+          }
+        ],
+        "updatedAt": 1684965393774,
+        "payementStatus": "COMPLETED"
+      },
+      {
+        "lastName": "M",
+        "groupEmail": "",
+        "wantToAttend": false,
+        "areaOfInterest": "AI,Software Engineering",
+        "payementStatus": "",
+        "otherKeyword": "",
+        "groupSubmission": false,
+        "firstName": "Prathyusha",
+        "approved": "Pending",
+        "submisstionType": "user",
+        "confirmPassword": "123456",
+        "reviewerApproval": [],
+        "email": "prathyusha8374@gmail.com",
+        "paperID": "010",
+        "abstract": "sample Test",
+        "keyword": [
+          {
+            "label": "ML",
+            "value": "ML"
+          },
+          {
+            "label": "Image Processing",
+            "value": "Image Processing"
+          }
+        ],
+        "title": "sample Test",
+        "document": "https://res.cloudinary.com/dd1uzjqg8/image/upload/v1684962682/1684962682278.pdf",
+        "updatedAt": 1684962684036,
+        "reviewers": [
+          {
+            "firstName": "Deepak Reddy",
+            "lastName": "Maram",
+            "wantToReview": "",
+            "areaOfInterest": "Human resources management,Talent management",
             "confirmPassword": "123456",
-            "email": "samireddy2403@gmail.com",
-            "paperID": "EIHC0sSg",
-            "reviewers": [
-                {
-                    "firstName": "Sai Karthik",
-                    "lastName": "Malyala",
-                    "areaOfInterest": "Software engineering, Cloud computing, Block chain",
-                    "confirmPassword": "123456",
-                    "email": "malyala3333@gmail.com",
-                    "updatedAt": 1683920247770
-                },
-                {
-                    "firstName": "Sai Karthik",
-                    "lastName": "Malyala",
-                    "wantToReview": "",
-                    "areaOfInterest": "Software engineering, Cloud computing, Block chain",
-                    "confirmPassword": "123456",
-                    "email": "sai.karthik.malyala@gmail.com",
-                    "updatedAt": 1684164063470
-                },
-                {
-                    "firstName": "Sai",
-                    "lastName": "K",
-                    "wantToReview": "",
-                    "areaOfInterest": "Software engineering, Cloud computing, Block chain",
-                    "confirmPassword": "123456",
-                    "email": "saik14111222@gmail.com",
-                    "updatedAt": 1684354546830
-                }
-            ],
-            "reviewerApproval": [
-                {
-                    "presentation": {
-                        "comments": "bad",
-                        "points": "2"
-                    },
-                    "theoretical": {
-                        "comments": "ok",
-                        "points": "9"
-                    },
-                    "approve": "Rejected",
-                    "findings": {
-                        "comments": "ok",
-                        "points": "9"
-                    },
-                    "email": "sai.karthik.malyala@gmail.com",
-                    "relavance": {
-                        "comments": "ok",
-                        "points": "9"
-                    },
-                    "objective": {
-                        "comments": "ok",
-                        "points": "9"
-                    }
-                }
-            ],
-            "document": "https://res.cloudinary.com/dd1uzjqg8/image/upload/v1684445928/1684445928420.pdf",
-            "abstract": "Sample test",
-            "keyword": [
-                {
-                    "label": "ML",
-                    "value": "ML"
-                },
-                {
-                    "label": "AI",
-                    "value": "AI"
-                },
-                {
-                    "label": "Data Structures",
-                    "value": "Data Structures"
-                }
-            ],
-            "title": "Sample test",
-            "updatedAt": 1684445931405
-        }
+            "acceptedByChair": false,
+            "email": "deepakreddy2634@gmail.com",
+            "updatedAt": 1684789153537,
+            "numberOfPapersAssigned": 0
+          },
+          {
+            "firstName": "pooja",
+            "lastName": "sura",
+            "wantToReview": "",
+            "areaOfInterest": "Electricity data,Data mining,AI",
+            "confirmPassword": "123456",
+            "email": "poojasura2022@gmail.com",
+            "updatedAt": 1685030409218,
+            "numberOfPapersAssigned": 0
+          },
+          {
+            "firstName": "Prathyusha",
+            "lastName": "Maram",
+            "wantToReview": "",
+            "areaOfInterest": "Electricity data,Data mining,AI",
+            "confirmPassword": "123456",
+            "acceptedByChair": true,
+            "email": "prathyu.maram@gmail.com",
+            "updatedAt": 1684788043358,
+            "numberOfPapersAssigned": 1
+          }
+        ]
+      }
     ],
     "status": true
-}
+  }

@@ -20,51 +20,20 @@ import BottomNav from "./components/BottomNav";
 
 export default function RewMainScreen({ navigation, myObject, rewData, type }) {
     const uemail = myObject.key1
-    const [refreshing, setRefreshing] = useState(false);
-    const [Udetails, setUdetails] = useState([]);
     console.log("In reviewer Main Screen");
-    console.log(uemail);
-    console.log(rewData);
+    console.log(type);
     const projectData = JSON.parse(uemail).project
-    const fetchData = () => {
-        // Simulate an asynchronous data fetch
-        setTimeout(() => {
-            setRefreshing(false);
-        }, 2000);
-    };
-
-    const onRefresh = () => {
-        setRefreshing(true);
-        fetchData();
-    };
-
-    useEffect(() => {
-        fetchData();
-    }, []);
-    function convertUnixTimestampToDate(unixTimestamp) {
-        const milliseconds = unixTimestamp * 1000;
-        const date = new Date(milliseconds);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        const dateString = `${year}/${month}/${day}`;
-        return dateString;
-      }
-    function Parser(field) {
-        console.log(JSON.parse(Udetails)[field]);
-        return `${JSON.parse(Udetails)[field]}`
-    }
     return (
         <>
             <TopNav navigation={navigation}></TopNav>
             <ScrollView
                 // contentContainerStyle={{ flexGrow: 1 }}
-                refreshControl={
-                    <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={onRefresh}
-                    />
-                }
+                // refreshControl={
+                //     <RefreshControl
+                //         refreshing={refreshing}
+                //         onRefresh={onRefresh}
+                //     />
+                // }
             >
                 <View style={styles.container}>
                     <Text style={styles.heading}>Important Dates</Text>
@@ -80,14 +49,17 @@ export default function RewMainScreen({ navigation, myObject, rewData, type }) {
                     <Text style={styles.heading}>Assigned Papers</Text>
                     <View>
                         {projectData.map((i, index) => (
-                            <View key={index} style={styles.subCard}>
-                                {/* <Icon name={i[1]} size={25} color="#089b2d" /> */}
-                                <Text style={{ marginLeft: 10, fontSize: 15, fontWeight: 'bold' }}><Text>Paper ID</Text> - {i.paperID}</Text>
-                                <Text style={{ marginLeft: 10, fontSize: 15, fontWeight: 'bold' }}>Title - {i.title}</Text>
-                                {/* <Text style={{ marginLeft: 10, fontSize: 15, fontWeight: 'bold' }}>{convertUnixTimestampToDate(i.updatedAt)}</Text> */}
-                                <Text style={{ marginLeft: 10, fontSize: 15, fontWeight: 'bold' }}>Status - {i.approved}</Text>
+                            <TouchableOpacity  key={index} onPress={()=>{
+                                navigation.navigate('RewSubmission',{pointer:index})}}> 
+                                <View style={styles.subCard}>
+                                    {/* <Icon name={i[1]} size={25} color="#089b2d" /> */}
+                                    <Text style={{ marginLeft: 10, fontSize: 15, fontWeight: 'bold' }}><Text>Paper ID</Text> - {i.paperID}</Text>
+                                    <Text style={{ marginLeft: 10, fontSize: 15, fontWeight: 'bold' }}>Title - {i.title}</Text>
+                                    {/* <Text style={{ marginLeft: 10, fontSize: 15, fontWeight: 'bold' }}>{convertUnixTimestampToDate(i.updatedAt)}</Text> */}
+                                    <Text style={{ marginLeft: 10, fontSize: 15, fontWeight: 'bold' }}>Status - {i.approved}</Text>
 
-                            </View>
+                                </View>
+                            </TouchableOpacity>
 
                         ))}
                     </View>
@@ -112,8 +84,8 @@ const styles = StyleSheet.create({
 
     subCard: {
         padding: 10,
-        marginHorizontal:15,
-        marginVertical:5,
+        marginHorizontal: 15,
+        marginVertical: 5,
         overflow: 'hidden',
         borderColor: 'green',
         borderWidth: 2,

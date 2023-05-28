@@ -26,46 +26,10 @@ export default function MainScreen({ navigation, myObject, type }) {
     const [Udetails, setUdetails] = useState([]);
     console.log("In Main Screen");
     console.log(type);
-    const fetchData = () => {
-        // Simulate an asynchronous data fetch
-        setTimeout(() => {
-            setRefreshing(false);
-        }, 2000);
-    };
-
-    const onRefresh = () => {
-        setRefreshing(true);
-        fetchData();
-    };
-
-    useEffect(() => {
-        fetchData();
-    }, []);
-    // const get = async () => {
-    //     console.log("connecting to backend");
-
-    //     const requestBody = {
-    //         email: uemail,
-    //     };
-    //     await axios.post(`https://${config.RenderIP}/api/getDetails`, requestBody)
-    //         .then(response => {
-    //             // Handle the response data
-    //             console.log(response.data);
-    //             setUdetails(JSON.stringify(response.data))
-
-    //         })
-    //         .catch(error => {
-    //             // Handle the error
-    //             console.error(error);
-    //         });
-
-    // }
-    // try {
-    //     // get()
-
-    // } catch (error) {
-
-    // }
+    if(type=='reviewer'){
+        console.log('came here');
+        navigation.navigate('RewMainScreen')
+    }
     function Parser(field) {
         console.log(JSON.parse(Udetails)[field]);
         return `${JSON.parse(Udetails)[field]}`
@@ -75,12 +39,12 @@ export default function MainScreen({ navigation, myObject, type }) {
             <TopNav navigation={navigation}></TopNav>
             <ScrollView
                 contentContainerStyle={{ flexGrow: 1 }}
-                refreshControl={
-                    <RefreshControl
-                        refreshing={refreshing}
-                        onRefresh={onRefresh}
-                    />
-                }
+                // refreshControl={
+                //     <RefreshControl
+                //         refreshing={refreshing}
+                //         // onRefresh={onRefresh}
+                //     />
+                // }
             >
                 <View style={styles.container}>
                     <Text style={styles.heading}>Important Dates</Text>

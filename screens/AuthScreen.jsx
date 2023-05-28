@@ -51,7 +51,7 @@ export default function AuthScreen({ navigation }) {
         }
     }
     // Formik
-    const initialValues = { email: '', password: '' };
+    const initialValues = { email: 'prathyu.maram@gmail.com', password: '123456' };
     const onSubmit = async (values) => {
         const requestBody = {
             email: values.email,
@@ -233,6 +233,7 @@ export default function AuthScreen({ navigation }) {
     };
     return (
         <View style={styles.container}>
+            <StatusBar style="auto" />
             <ScrollView >
                 <View style={styles.logoContainer}>
 

@@ -16,7 +16,7 @@ const CustomeDrawer = (props) => {
     const handleToggleSwitch = () => {
         setIsDarkMode(!isDarkMode);
     };
-    const items = [['Home', 'home', `${(type == 'reviewer') ? 'RewMainScreen' : 'MainScreen'}`], [`${(type == 'reviewer') ? 'My Assigned papers' : 'My Submissions'}`, 'article', `${(type == 'reviewer') ? 'RewSubmission' : 'AuthSubmission'}`], ['Profile', 'person', 'Profile'], ['Settings', 'settings', 'Profile'], ['About', 'info', 'Profile']]
+    const items = [['Home', 'home', `${(type == 'reviewer') ? 'RewMainScreen' : 'MainScreen'}`], [`${(type == 'reviewer') ? 'My Assigned papers' : 'My Submissions'}`, 'article', `${(type == 'reviewer') ? 'RewSubmission' : 'AuthSubmission'}`], ['Profile', 'person', 'Profile'], ['Settings', 'settings', 'Profile'], ['About', 'info', 'About']]
     const [Udetails, setUdetails] = useState(JSON.stringify(Ud));
     function Captilizer(str) {
         return str.charAt(0).toUpperCase() + str.slice(1)
