@@ -14,7 +14,7 @@ import { Button, Icon } from '@rneui/themed';
 import Foot from './components/Footer';
 export default function AuthScreen({ navigation }) {
     var selected = ""
-    
+
     const [email, setEmail] = useState();
     const [pass, setPass] = useState();
     const [visible, setVis] = useState(true);
@@ -233,7 +233,9 @@ export default function AuthScreen({ navigation }) {
     };
     return (
         <View style={styles.container}>
-            <StatusBar style="auto" />
+            <StatusBar barStyle="light-content"
+                backgroundColor={'black'}
+            ></StatusBar>
             <ScrollView >
                 <View style={styles.logoContainer}>
 

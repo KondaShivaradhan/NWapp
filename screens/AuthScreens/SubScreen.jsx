@@ -60,13 +60,16 @@ const SubScreen = ({ navigation, Udata }) => {
                         .catch(e => console.log(e));
                     const contentUri = `file://${fileUri}`;
                     await Notifications.Notification
+                    const trigger = {
+                        seconds: 10, // Trigger the notification after 10 seconds
+                      };
                     await Notifications.scheduleNotificationAsync({
                         content: {
                             title: 'Download Completed',
                             body: 'The PDF file has been downloaded successfully.',
                         },
-                        trigger: 2,
-                        attachments: [{ identifier: contentUri, url: contentUri, mimeType: mimetype }],
+                        trigger: trigger,
+                        // attachments: [{ identifier: contentUri, url: contentUri, mimeType: mimetype }],
                     });
                 } else {
                     shareAsync(uri);
