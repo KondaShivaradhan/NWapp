@@ -9,7 +9,7 @@ export default function TopNav({ navigation }) {
         <>
            
            <StatusBar  barStyle="light-content"
-            backgroundColor={Constants.statusBarColor} 
+            backgroundColor={'black'} 
            ></StatusBar>
             <View style={styles.navbar}>
                 <TouchableOpacity style={{zIndex:1000}} onPress={() => { navigation.openDrawer() }}>

@@ -59,12 +59,13 @@ const SubScreen = ({ navigation, Udata }) => {
                         })
                         .catch(e => console.log(e));
                     const contentUri = `file://${fileUri}`;
+                    await Notifications.Notification
                     await Notifications.scheduleNotificationAsync({
                         content: {
                             title: 'Download Completed',
                             body: 'The PDF file has been downloaded successfully.',
                         },
-                        trigger: null,
+                        trigger: 2,
                         attachments: [{ identifier: contentUri, url: contentUri, mimeType: mimetype }],
                     });
                 } else {
@@ -112,7 +113,6 @@ const SubScreen = ({ navigation, Udata }) => {
         console.log(JSON.parse(Udata)[field]);
         return `${JSON.parse(Udata)[field]}`
     }
-    const temp = { "lastName": "Maram", "groupEmail": "", "wantToAttend": false, "areaOfInterest": "Electricity data,Data mining,Air pollution index method", "payementStatus": "", "groupSubmission": false, "reviewers": [], "firstName": "Prathyusha", "password": "123456", "approved": "Pending", "confirmPassword": "123456", "reviewerApproval": [], "email": "prathyu.maram@gmail.com", "document": "https://res.cloudinary.com/dd1uzjqg8/image/upload/v1684788225/1684788225107.pdf", "otherKeyword": "Electricity data,Data mining,Air pollution index method", "abstract": "The continuous development of society has destroyed the living environment of human beings to a\nlarge extent. The problem of air pollution is becoming more and more serious, which affects people’s\ndaily life and threatens human health and the natural environment. It is very important to evaluate\nand prevent air pollution. The existing atmospheric environmental pollution assessment system has\nproblems such as low accuracy of prediction results and incomplete analysis of problems, resulting\nin untimely prevention and control of regional atmospheric environmental pollution. This paper\nanalyzes the needs of atmospheric environment data mining, monitoring the prevention and control\nof atmospheric environment pollution, using data mining technology combined with power data to\nevaluate and prevent air pollution. Through the real-time detection and evaluation of the regional\nenvironmental pollution index, it is possible to carry out timely treatment when the atmospheric\nenvironmental pollution does not meet the standard. Through the prediction accuracy test, the\nenvironmental pollution index test, the atmospheric environment quality score test and the prevention\nand control effect test in different regions, it is found that the data mining technology is used for\nprevention and control. The prediction accuracy increased by 4.18%, and the environmental pollution\nindex decreased. It is more conducive to the control of regional atmospheric pollution, the rate of\natmospheric environmental quality score has been increased by 2.38%, and the control effect has been optimized by 3.1%. Data mining technology is more conducive to the assessment and prevention of regional air pollution.", "keyword": [{ "label": "Other", "value": "Other" }], "title": "Application of data mining combined with power data in assessment and prevention of regional atmospheric pollution", "paperID": "003", "updatedAt": 1684788240726 }
     useEffect(() => {
         let total = 0;
         var index = 0
