@@ -1,10 +1,16 @@
-import { Linking, StyleSheet, StatusBar, Text, TextInput, TouchableOpacity, View, ScrollView, ToastAndroid, Animated } from 'react-native';
+import { Linking, StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView, ToastAndroid, Animated } from 'react-native';
 import styles from './styles';
+// import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from 'react-native';
+import Constants from 'expo-constants';
 import { Icon, Image } from '@rneui/themed';
 export default function TopNav({ navigation }) {
     return (
         <>
-           <StatusBar backgroundColor={'black'}></StatusBar>
+           
+           <StatusBar  barStyle="light-content"
+            backgroundColor={Constants.statusBarColor} 
+           ></StatusBar>
             <View style={styles.navbar}>
                 <TouchableOpacity style={{zIndex:1000}} onPress={() => { navigation.openDrawer() }}>
                     <Icon size={40} name="menu" color="green" />

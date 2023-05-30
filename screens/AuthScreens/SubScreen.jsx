@@ -6,6 +6,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { Text } from 'react-native';
 import { Button, Icon } from '@rneui/themed';
 import * as FileSystem from 'expo-file-system';
+import { useEffect } from 'react';
 
 
 
@@ -54,6 +55,10 @@ const SubScreen = ({ navigation, Udata }) => {
         }
 
     };
+    // total calculator
+    const [Rtotal, setRtotal] = useState([]);
+    var GrandTotal = 0
+    const [gTotal, setgTotal] = useState(0);
     const [clicked, setclicked] = useState([10, 10]);
     console.log("in Author SUbmision Screen");
     console.log(Udata);
@@ -62,6 +67,30 @@ const SubScreen = ({ navigation, Udata }) => {
         return `${JSON.parse(Udata)[field]}`
     }
     const temp = { "lastName": "Maram", "groupEmail": "", "wantToAttend": false, "areaOfInterest": "Electricity data,Data mining,Air pollution index method", "payementStatus": "", "groupSubmission": false, "reviewers": [], "firstName": "Prathyusha", "password": "123456", "approved": "Pending", "confirmPassword": "123456", "reviewerApproval": [], "email": "prathyu.maram@gmail.com", "document": "https://res.cloudinary.com/dd1uzjqg8/image/upload/v1684788225/1684788225107.pdf", "otherKeyword": "Electricity data,Data mining,Air pollution index method", "abstract": "The continuous development of society has destroyed the living environment of human beings to a\nlarge extent. The problem of air pollution is becoming more and more serious, which affects people’s\ndaily life and threatens human health and the natural environment. It is very important to evaluate\nand prevent air pollution. The existing atmospheric environmental pollution assessment system has\nproblems such as low accuracy of prediction results and incomplete analysis of problems, resulting\nin untimely prevention and control of regional atmospheric environmental pollution. This paper\nanalyzes the needs of atmospheric environment data mining, monitoring the prevention and control\nof atmospheric environment pollution, using data mining technology combined with power data to\nevaluate and prevent air pollution. Through the real-time detection and evaluation of the regional\nenvironmental pollution index, it is possible to carry out timely treatment when the atmospheric\nenvironmental pollution does not meet the standard. Through the prediction accuracy test, the\nenvironmental pollution index test, the atmospheric environment quality score test and the prevention\nand control effect test in different regions, it is found that the data mining technology is used for\nprevention and control. The prediction accuracy increased by 4.18%, and the environmental pollution\nindex decreased. It is more conducive to the control of regional atmospheric pollution, the rate of\natmospheric environmental quality score has been increased by 2.38%, and the control effect has been optimized by 3.1%. Data mining technology is more conducive to the assessment and prevention of regional air pollution.", "keyword": [{ "label": "Other", "value": "Other" }], "title": "Application of data mining combined with power data in assessment and prevention of regional atmospheric pollution", "paperID": "003", "updatedAt": 1684788240726 }
+    useEffect(() => {
+        let total = 0;
+        var index = 0
+        var eachRpoints = [0, 0, 0]
+        JSON.parse(Udata).reviewerApproval.forEach((element) => {
+            Object.keys(element).forEach((i) => {
+                if (i !== 'email' && i !== 'approve') {
+                    total += Number(element[i].points);
+                    console.log(total);
+
+                }
+                eachRpoints[index] = Number(total)
+            });
+            index++
+            total = 0
+        });
+        console.log(eachRpoints);
+        eachRpoints.forEach(e => {
+            GrandTotal = e + GrandTotal
+        })
+        setgTotal(GrandTotal)
+        setRtotal(eachRpoints);
+    }, [Udata]);
+
     return (
         <>
             <TopNav navigation={navigation} />
@@ -150,8 +179,8 @@ const SubScreen = ({ navigation, Udata }) => {
                                     <View key={count} style={styles.rewF}>
                                         <Text style={[{
                                             textAlign: 'center', color: 'green',
-                                            fontWeight: 'bold', marginTop: 10,
-                                        }]}>{count + 1} Reviewer Feedback</Text>
+                                            fontWeight: 'bold', marginVertical: 10,
+                                        }]}>Reviewer {count + 1} Feedback </Text>
                                         {
                                             Object.keys(element).map((i, index) => (
                                                 <View key={index}>
@@ -164,7 +193,7 @@ const SubScreen = ({ navigation, Udata }) => {
                                                             </View>
                                                             <View style={{ width: Dimensions.get('screen').width / 2.3, borderColor: 'black', borderWidth: 1 }}>
                                                                 <Text style={{ textAlign: 'center', paddingVertical: 10 }}>
-                                                                    {element[i].points}
+                                                                    {element[i].points}/10
                                                                 </Text>
                                                             </View>
 
@@ -180,12 +209,31 @@ const SubScreen = ({ navigation, Udata }) => {
                                                         {/* <Text style={[styles.heading,{margin:5, fontWeight: 'bold' }]}>{i} - {element[i].points}</Text>
                                             <Text>comments - {element[i].comments}</Text> */}
                                                     </>}
+
                                                 </View>
+
                                             ))
                                         }
+                                        <View style={styles.table}>
+                                            <View style={{ width: Dimensions.get('screen').width / 2.3, borderColor: 'black', borderWidth: 1 }}>
+                                                <Text style={{ textAlign: 'center', paddingVertical: 10, color: 'green', fontWeight: 'bold' }}>Total</Text>
+                                            </View>
+                                            <View style={{ width: Dimensions.get('screen').width / 2.3, borderColor: 'black', borderWidth: 1 }}>
+                                                <Text style={{ textAlign: 'center', paddingVertical: 10, fontWeight: 'bold' }}>
+                                                    {Rtotal[count]}/50
+                                                </Text>
+                                            </View>
+                                        </View>
+
                                     </View>
+
                                 ))}
+                                {gTotal!=0&&<View style={{width: Dimensions.get('screen').width -45}}>
+                                        <Text style={[styles.Tbold]}>Grand Total - {gTotal}</Text>
+                                    </View>}
+                                    
                             </Text>
+
                             : null}
                     </> :
                         <View style={[styles.subCard, { minHeight: 100 }]}>
@@ -201,6 +249,12 @@ const SubScreen = ({ navigation, Udata }) => {
 }
 
 const styles = StyleSheet.create({
+    Tbold:{
+        textAlign:'center',
+        color:'green',
+        fontWeight:'bold',
+        marginVertical:10
+    },
     textSetting: {
         margin: 15,
     },
