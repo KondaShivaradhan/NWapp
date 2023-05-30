@@ -27,6 +27,7 @@
         "dotenv": "^16.0.3",
         "expo": "~48.0.15",
         "expo-file-system": "^15.2.2",
+        "expo-notifications": "^0.18.1",
         "expo-status-bar": "~1.4.4",
         "formik": "^2.2.9",
         "install": "^0.13.0",
