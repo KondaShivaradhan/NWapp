@@ -118,16 +118,7 @@ export default function Signup({ navigation }) {
                 return (((val.length >= 1 && val.length <= 20) && (containsOnlyLetters(val))))
             }
         ),
-        aoi: Yup.string().required('Cannot be Empty').test(
-            'len',
-            'Invalid input',
-            (val) => {
-                if (val == undefined) {
-                    return true;
-                }
-                return (((val.length >= 1 && val.length <= 20) && (containsOnlyLetters(val))))
-            }
-        ),
+        aoi: Yup.string().required('Cannot be Empty'),
         email: Yup.string().email('Invalid email').required('Email is required'),
         password: Yup.string().required('Password is required').test(
             'len',
@@ -272,7 +263,7 @@ export default function Signup({ navigation }) {
                                     onChangeText={handleChange('aoi')}
                                     onBlur={handleBlur('aoi')}
                                     value={values.aoi}
-                                    placeholder="Area of interest"
+                                    placeholder="Area of interest - Seperated by , Comma"
                                     keyboardType="default"
                                     autoCapitalize="none"
                                 />
