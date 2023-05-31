@@ -18,21 +18,7 @@ Notifications.setNotificationHandler({
 
 const SubScreen = ({ navigation, Udata }) => {
 
-    const downloadFromUrl2 = async (url) => {
-        try {
-            const filename = "file.pdf";
-            const result = await FileSystem.downloadAsync(
-                url,
-                FileSystem.documentDirectory + filename
-            );
-            console.log(result);
-            var downloadF = Parser('lastName') + "_" + Parser('paperID')
-            save(result.uri, `${downloadF + '.pdf'}`, 'Application/pdf');
-        } catch (error) {
-
-        }
-
-    };
+ 
     const downloadFromUrl = async (url) => {
         try {
             const filename = "file.pdf";
@@ -59,9 +45,8 @@ const SubScreen = ({ navigation, Udata }) => {
                         })
                         .catch(e => console.log(e));
                     const contentUri = `file://${fileUri}`;
-                    await Notifications.Notification
                     const trigger = {
-                        seconds: 10, // Trigger the notification after 10 seconds
+                        seconds: 1, // Trigger the notification after 10 seconds
                       };
                     await Notifications.scheduleNotificationAsync({
                         content: {
@@ -82,29 +67,7 @@ const SubScreen = ({ navigation, Udata }) => {
         }
 
     };
-    const save2 = async (uri, filename, mimetype) => {
-        try {
-            const { status } = await FileSystem.getPermissionsAsync();
-            if (status !== 'granted') {
-                await FileSystem.requestPermissionsAsync();
-            }
-
-            const fileUri = FileSystem.documentDirectory + filename;
-            await FileSystem.copyAsync({ from: uri, to: fileUri });
-
-            const contentUri = `file://${fileUri}`;
-            await Notifications.scheduleNotificationAsync({
-                content: {
-                    title: 'Download Completed',
-                    body: 'The PDF file has been downloaded successfully.',
-                },
-                trigger: null,
-                attachments: [{ identifier: contentUri, url: contentUri, mimeType: mimetype }],
-            });
-        } catch (error) {
-            console.log(error);
-        }
-    };
+ 
     // total calculator
     const [Rtotal, setRtotal] = useState([]);
     var GrandTotal = 0

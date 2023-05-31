@@ -2,7 +2,7 @@
 import Svg, { Path } from 'react-native-svg';
 import axios from "axios";
 import { useEffect, useState } from 'react';
-import { Linking, StyleSheet, StatusBar, Text, TextInput, TouchableOpacity, View, ScrollView, ToastAndroid, Animated } from 'react-native';
+import { Linking, StyleSheet, StatusBar, Text, TextInput, TouchableOpacity, Modal, View, ScrollView, ToastAndroid, Animated } from 'react-native';
 import { Image, Input } from 'react-native-elements';
 import { Screen } from 'react-native-screens';
 import { ScreenHeight } from '@rneui/base';
@@ -63,40 +63,15 @@ export default function AuthScreen({ navigation }) {
                 try {
                     await axios.post(`https://${config.RenderIP}/api/student/login`, requestBody)
                         .then(response => {
-                            console.log(response.data);
-                            console.log(response.data.status);
                             if (response.data.status) {
                                 const Udetails = JSON.stringify(response.data.data)
 
+                                setIsAlertVisible(true);
+                                setTimeout(() => {
+                                    handleConfirm()
+                                }, 1500);
                                 navigation.navigate('afterlog', { uemail: Udetails, type: selected })
 
-                                // const get = async () => {
-                                //     console.log("connecting to backend at  Page");
-
-                                //     const requestBody = {
-                                //         email: values.email,
-                                //     };
-                                //     await axios.post(`https://${config.RenderIP}/api/getDetails`, requestBody)
-                                //         .then(response => {
-                                //             // Handle the response data
-                                //             // setUdetails(JSON.stringify(response.data))
-                                //             // navigation.navigate('afterlog', { uemail: `${values.email}` })
-                                //             const Udetails = JSON.stringify(response.data)
-                                //             navigation.navigate('afterlog', { uemail: Udetails, type: selected })
-
-                                //         })
-                                //         .catch(error => {
-                                //             // Handle the error
-                                //             console.log(error);
-                                //         });
-
-                                // }
-                                // try {
-                                //     get()
-                                // }
-                                // catch (e) {
-                                //     console.log(e);
-                                // }
                             }
                             else
                                 alert('Auth Failed')
@@ -125,15 +100,17 @@ export default function AuthScreen({ navigation }) {
                                     };
                                     await axios.post(`https://${config.RenderIP}/api/getDetails`, requestBody)
                                         .then(response => {
-                                            // Handle the response data
-                                            // setUdetails(JSON.stringify(response.data))
-                                            // navigation.navigate('afterlog', { uemail: `${values.email}` })
                                             const Udetails = JSON.stringify(response.data)
-                                            navigation.navigate('afterlog', { uemail: Udetails, type: selected })
+                                            setIsAlertVisible(true);
+                                            setTimeout(() => {
+                                                handleConfirm();
+                                                navigation.navigate('afterlog', { uemail: Udetails, type: selected });
+                                            }, 1000);
+                                            // navigation.navigate('afterlog', { uemail: Udetails, type: selected })
 
                                         })
                                         .catch(error => {
-                                            // Handle the error
+                                            // Handle the error     
                                             console.log(error);
                                         });
 
@@ -172,20 +149,18 @@ export default function AuthScreen({ navigation }) {
                                     const requestBody = {
                                         email: values.email,
                                         headers: {
-                                            'token': response.data.token, // Example header
-                                            // Add more headers if needed
+                                            'token': response.data.token, 
                                         },
                                     };
                                     await axios.get(`https://${config.RenderIP}/api/reviewer/project`, requestBody)
                                         .then(response => {
-                                            // Handle the response data
-                                            // setUdetails(JSON.stringify(response.data))
-                                            // navigation.navigate('afterlog', { uemail: `${values.email}` })
-                                            console.log('====================================');
-                                            // console.log(response.data);
-                                            console.log('====================================');
                                             const Udetails = JSON.stringify(response.data)
-                                            navigation.navigate('afterlog', { uemail: Udetails, type: selected, rewData: rewData })
+                                            setIsAlertVisible(true);
+                                            setTimeout(() => {
+                                                handleConfirm()
+                                                navigation.navigate('afterlog', { uemail: Udetails, type: selected, rewData: rewData })
+
+                                            }, 1500);
 
                                         })
                                         .catch(error => {
@@ -231,12 +206,36 @@ export default function AuthScreen({ navigation }) {
 
         return errors;
     };
+    // model 
+    const [isAlertVisible, setIsAlertVisible] = useState(false);
+    const iconsize = 20
+
+    const showAlert = () => {
+        setIsAlertVisible(true);
+    };
+
+    const hideAlert = () => {
+        setIsAlertVisible(false);
+    };
+
+    const handleConfirm = () => {
+        // Handle user confirmation
+        hideAlert();
+    };
     return (
         <View style={styles.container}>
             <StatusBar barStyle="light-content"
                 backgroundColor={'black'}
             ></StatusBar>
             <ScrollView >
+                <Modal visible={isAlertVisible} style={{ borderColor: 'green', borderWidth: 2 }} onRequestClose={hideAlert} transparent>
+                    <View style={{ backgroundColor: '#2342', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={{ borderColor: 'green', elevation: 10, borderWidth: 2, backgroundColor: '#fff', padding: 20, borderRadius: 10 }}>
+                            <Text style={{ fontSize: 14 }}>Logged in Successfully</Text>
+                            {/* <Button style={{width:40}} title="OK" color='green' onPress={handleConfirm} /> */}
+                        </View>
+                    </View>
+                </Modal>
                 <View style={styles.logoContainer}>
 
                     <View style={{ borderRadius: 25, padding: 10, backgroundColor: 'white' }}>
@@ -286,15 +285,15 @@ export default function AuthScreen({ navigation }) {
                                 <View style={{ flexDirection: 'row', gap: 10, justifyContent: 'center' }}>
                                     <Button radius={'lg'} type="solid" size='sm' color={'green'} onPress={() => { handleSubmit(); selected = "author" }}  >
                                         Author
-                                        <Icon style={{ marginLeft: 0 }} name="person" color="white" />
+                                        <Icon style={{ marginLeft: 0 }} size={iconsize}  name="person" color="white" />
                                     </Button>
                                     <Button radius={'lg'} type="solid" size='sm' color={'green'} onPress={() => { handleSubmit(); selected = "reviewer" }}  >
                                         Reviewer
-                                        <Icon style={{ marginLeft: 0 }} name="edit" color="white" />
+                                        <Icon style={{ marginLeft: 0 }} size={iconsize} name="edit" color="white" />
                                     </Button>
                                     <Button radius={'lg'} type="solid" size='sm' color={'green'} onPress={() => { handleSubmit(); selected = "student" }}  >
                                         Student
-                                        <Icon style={{ marginLeft: 0 }} name="school" color="white" />
+                                        <Icon style={{ marginLeft: 0 }} size={iconsize} name="school" color="white" />
                                     </Button>
                                 </View>
                                 <View style={{ margin: 10 }}>

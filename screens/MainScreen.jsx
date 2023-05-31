@@ -41,6 +41,7 @@ export default function MainScreen({ navigation, myObject, type }) {
                 contentContainerStyle={{ flexGrow: 1 }}
                 
             >
+                
                 <View style={styles.container}>
                     <Text style={styles.heading}>Important Dates</Text>
                     <ScrollView
