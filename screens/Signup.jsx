@@ -209,7 +209,7 @@ export default function Signup({ navigation }) {
                         >
                         </Image>
                     </View>
-                    <Text style={[styles.title, { marginTop: 10 }]}>NORTHWEST CONFORENCE</Text>
+                    <Text style={[styles.title, { marginTop: 10 }]}>NORTHWEST CONFERENCE</Text>
                     <Text style={styles.title}>2023</Text>
                     {/* <Button title="check" onPress={()=>setVis(!visible)}></Button> */}
                 </View>

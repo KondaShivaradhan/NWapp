@@ -39,12 +39,7 @@ export default function MainScreen({ navigation, myObject, type }) {
             <TopNav navigation={navigation}></TopNav>
             <ScrollView
                 contentContainerStyle={{ flexGrow: 1 }}
-                // refreshControl={
-                //     <RefreshControl
-                //         refreshing={refreshing}
-                //         // onRefresh={onRefresh}
-                //     />
-                // }
+                
             >
                 <View style={styles.container}>
                     <Text style={styles.heading}>Important Dates</Text>
